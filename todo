@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:white;
+}
+#app {
+  padding:20px;
+}
+input {
+  width:70%;
+  padding:10px;
+  font-size:18px;
+}
+button {
+  padding:10px;
+  font-size:18px;
+}
+li {
+  font-size:20px;
+  margin:10px 0;
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <h2>Today</h2>
+  <input id="task" placeholder="Add task">
+  <button onclick="addTask()">+</button>
+  <ul id="list"></ul>
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function render(){
+  list.innerHTML="";
+  tasks.forEach((t,i)=>{
+    list.innerHTML += `<li onclick="removeTask(${i})">✔ ${t}</li>`;
+  });
+}
+function addTask(){
+  if(task.value){
+    tasks.push(task.value);
+    task.value="";
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    render();
+  }
+}
+function removeTask(i){
+  tasks.splice(i,1);
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  render();
+}
+render();
+</script>
+</body>
+</html>
